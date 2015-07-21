@@ -1,12 +1,10 @@
 package worksap.co.jp.discount.dto;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.UUID;
 
-/**
- * Created by zuo on 15-7-21.
- */
-public class Crime {
+public class Crime implements Serializable{
 
     private UUID uuid;
     private String title;

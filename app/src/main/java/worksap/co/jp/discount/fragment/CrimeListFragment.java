@@ -1,10 +1,10 @@
 package worksap.co.jp.discount.fragment;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.ListFragment;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -15,8 +15,10 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
+import worksap.co.jp.discount.CrimeDetailActivity;
 import worksap.co.jp.discount.R;
 import worksap.co.jp.discount.dto.Crime;
+import worksap.co.jp.discount.dto.CrimeLab;
 
 
 /**
@@ -26,41 +28,33 @@ public class CrimeListFragment extends ListFragment {
 
     private static final String TAG = "CrimeListFragment";
 
-    private List<Crime> crimes = new ArrayList<>();
+    private CrimeLab crimes = CrimeLab.INSTANCE;
 
     public CrimeListFragment() {
         super();
-        for (int i = 0; i < 100; i++) {
-            Crime c = new Crime();
-            c.setTitle("Crime #" + i);
-            c.setSolved( i%3 == 0);
-            crimes.add(c);
-        }
+
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getActivity().setTitle("Crime List");
-        ArrayAdapter<Crime> crimeArrayAdapter = new CrimeListAdapter(crimes);
+        ArrayAdapter<Crime> crimeArrayAdapter = new CrimeListAdapter(crimes.getCrimes());
         setListAdapter(crimeArrayAdapter);
     }
 
     @Override
     public void onListItemClick(ListView l, View v, int position, long id) {
         Crime c = (Crime) getListAdapter().getItem(position);
-        Log.d("test", c.toString());
+        Intent intent = new Intent(getActivity(), CrimeDetailActivity.class);
+        intent.putExtra(CrimeDetailFragment.EXTRA_CRIME, c.getUuid());
+        startActivity(intent);
     }
-
-
 
     public class CrimeListAdapter extends ArrayAdapter<Crime> {
 
-
         CheckBox solvedCheckbox;
-
         TextView crimeTitle;
-
         TextView crimeDate;
 
         public CrimeListAdapter(List<Crime> crimes) {
@@ -83,5 +77,12 @@ public class CrimeListFragment extends ListFragment {
             solvedCheckbox.setChecked(c.isSolved());
             return convertView;
         }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        // this one is important for update the data after come back from the intent
+        ((CrimeListAdapter)getListAdapter()).notifyDataSetChanged();
     }
 }

@@ -12,13 +12,17 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 
+import java.util.UUID;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import worksap.co.jp.discount.R;
 import worksap.co.jp.discount.dto.Crime;
+import worksap.co.jp.discount.dto.CrimeLab;
 
-public class CrimeFragment extends Fragment {
+public class CrimeDetailFragment extends Fragment {
 
+    public static final String EXTRA_CRIME = "EXTRA_CRIME";
 
     @Bind(R.id.crime_title)
     EditText crimeTitle;
@@ -33,7 +37,7 @@ public class CrimeFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getActivity().setTitle("Crime Detail");
-        crime = new Crime();
+        crime = CrimeLab.INSTANCE.getCrime((UUID) getActivity().getIntent().getSerializableExtra(EXTRA_CRIME));
     }
 
     @Override
@@ -42,6 +46,9 @@ public class CrimeFragment extends Fragment {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_crime, container, false);
         ButterKnife.bind(this, v);
+        crimeTitle.setText(this.crime.getTitle());
+        crimeDate.setText(this.crime.getDate().toString());
+        crimeSolved.setChecked(this.crime.isSolved());
         crimeTitle.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
