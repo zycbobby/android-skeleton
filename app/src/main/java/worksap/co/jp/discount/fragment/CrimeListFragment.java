@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import worksap.co.jp.discount.CrimeDetailActivity;
+import worksap.co.jp.discount.CrimePagerActivity;
 import worksap.co.jp.discount.R;
 import worksap.co.jp.discount.dto.Crime;
 import worksap.co.jp.discount.dto.CrimeLab;
@@ -46,8 +47,9 @@ public class CrimeListFragment extends ListFragment {
     @Override
     public void onListItemClick(ListView l, View v, int position, long id) {
         Crime c = (Crime) getListAdapter().getItem(position);
-        Intent intent = new Intent(getActivity(), CrimeDetailActivity.class);
+        Intent intent = new Intent(getActivity(), CrimePagerActivity.class);
         intent.putExtra(CrimeDetailFragment.EXTRA_CRIME, c.getUuid());
+        intent.putExtra(CrimePagerActivity.EXTRA_CRIME_POSITION, position);
         startActivity(intent);
     }
 

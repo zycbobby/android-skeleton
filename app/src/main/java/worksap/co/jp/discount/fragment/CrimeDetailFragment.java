@@ -37,7 +37,8 @@ public class CrimeDetailFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getActivity().setTitle("Crime Detail");
-        crime = CrimeLab.INSTANCE.getCrime((UUID) getActivity().getIntent().getSerializableExtra(EXTRA_CRIME));
+        UUID serializable = (UUID) getArguments().getSerializable(EXTRA_CRIME);
+        this.crime = CrimeLab.INSTANCE.getCrime(serializable);
     }
 
     @Override

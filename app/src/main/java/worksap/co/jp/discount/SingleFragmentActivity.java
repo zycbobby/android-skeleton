@@ -18,7 +18,9 @@ public abstract class SingleFragmentActivity extends ActionBarActivity{
      * this method can be overriden
      * @return fragment container
      */
-    public abstract int getFragmentMountPoint();
+    public int getFragmentMountPoint() {
+        return R.id.fragmentContainer;
+    };
 
 
     @Override

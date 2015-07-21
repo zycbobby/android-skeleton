@@ -16,11 +16,6 @@ public class CrimeListActivity extends SingleFragmentActivity {
     }
 
     @Override
-    public int getFragmentMountPoint()  {
-        return R.id.fragmentContainer;
-    }
-
-    @Override
     protected Fragment createFragment() {
         return new CrimeListFragment();
     }

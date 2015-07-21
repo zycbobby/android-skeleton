@@ -1,9 +1,9 @@
 package worksap.co.jp.discount;
 
+import android.os.Bundle;
 import android.support.v4.app.Fragment;
 
 import worksap.co.jp.discount.fragment.CrimeDetailFragment;
-import worksap.co.jp.discount.fragment.CrimeListFragment;
 
 public class CrimeDetailActivity extends SingleFragmentActivity {
 
@@ -13,12 +13,11 @@ public class CrimeDetailActivity extends SingleFragmentActivity {
     }
 
     @Override
-    public int getFragmentMountPoint()  {
-        return R.id.fragmentContainer;
-    }
-
-    @Override
     protected Fragment createFragment() {
-        return new CrimeDetailFragment();
+        CrimeDetailFragment crimeDetailFragment = new CrimeDetailFragment();
+        Bundle args = new Bundle();
+        args.putSerializable(CrimeDetailFragment.EXTRA_CRIME, getIntent().getSerializableExtra(CrimeDetailFragment.EXTRA_CRIME));
+        crimeDetailFragment.setArguments(args);
+        return crimeDetailFragment;
     }
 }
